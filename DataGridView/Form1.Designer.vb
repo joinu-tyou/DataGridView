@@ -34,6 +34,7 @@ Partial Class Form1
         Me.fg3 = New System.Windows.Forms.DataGridView()
         Me.fg2 = New System.Windows.Forms.DataGridView()
         Me.fg1 = New System.Windows.Forms.DataGridView()
+
         CType(Me.fg12, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.fg11, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.fg10, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -120,9 +121,14 @@ Partial Class Form1
         '
         'fg2
         '
+        Me.fg2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.fg2.Location = New System.Drawing.Point(312, 109)
+        Me.fg2.MultiSelect = False
         Me.fg2.Name = "fg2"
-        Me.fg2.Size = New System.Drawing.Size(232, 160)
+        Me.fg2.RowTemplate.Height = 21
+        Me.fg2.ScrollBars = System.Windows.Forms.ScrollBars.None
+        Me.fg2.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
+        Me.fg2.Size = New System.Drawing.Size(232, 159)
         Me.fg2.TabIndex = 14
         '
         'fg1
@@ -177,6 +183,8 @@ Partial Class Form1
     Friend WithEvents fg5 As Windows.Forms.DataGridView
     Friend WithEvents fg4 As Windows.Forms.DataGridView
     Friend WithEvents fg3 As Windows.Forms.DataGridView
+
     Friend WithEvents fg2 As Windows.Forms.DataGridView
+
     Friend WithEvents fg1 As Windows.Forms.DataGridView
 End Class

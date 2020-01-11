@@ -13,7 +13,11 @@ Public Class Form1
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles Me.Load
 
+        'MsgBox(Application.StartupPath & vbCrLf & System.Environment.CurrentDirectory)
+
+
         InitGridNoDataSource(fg1)
+        InitGridNoDataSourceSort(fg2)
 
     End Sub
 
@@ -58,16 +62,13 @@ Public Class Form1
         '第一行第一列の設定
         fg.Rows(0).Cells(0).ReadOnly = False
         fg.Rows(0).Cells(0).Style.BackColor = Color.White
-
-
-
-
         fg.Rows(0).Cells(0).Value = "名前"
 
 
         fg.Rows(0).Cells(1).Value = "点数"
         fg.Rows(0).Cells(2).Value = "偏差値"
 
+        '第二行の設定
         fg.Rows(1).Cells(0).Value = "英語"
         fg.Rows(1).Cells(1).Value = ""
         fg.Rows(1).Cells(2).Value = ""
@@ -80,19 +81,63 @@ Public Class Form1
         fg.Rows(3).Cells(1).Value = ""
         fg.Rows(3).Cells(2).Value = ""
 
-        'For i As Integer = 0 To 3
-        '    fg.Rows(i).Height = 285 / 15 '.set_RowHeight(i, 285)
-        'Next
-
-        fg.Rows(0).Cells(0).Style.BackColor = Color.White
-
         fg.ResumeLayout()
         Exit Sub
 ERR_HANDLE:
         fg.ResumeLayout()
         MsgBox(GetCurrentMethod.Name & vbCrLf & Err.Description)
+    End Sub
+
+    Private Sub InitGridNoDataSourceSort(ByRef fg As System.Windows.Forms.DataGridView)
+
+        On Error GoTo ERR_HANDLE
+        fg.SuspendLayout()
+        '初期化
+        fg.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing
+        fg.ColumnHeadersHeight = 285 / 10
+        fg.ColumnHeadersDefaultCellStyle.BackColor = FromHtml(G_GRID_TITLE_COLOR)
 
 
+        fg.AllowUserToOrderColumns = True
+        fg.AllowUserToDeleteRows = True
+        fg.AllowUserToAddRows = False
+        fg.AllowUserToResizeColumns = False
+        fg.AllowUserToResizeRows = False
+        fg.RowHeadersVisible = False
+        fg.ColumnHeadersVisible = True
+        'fg.ColumnHeadersHeight = 20
+        fg.RowTemplate.Height = 285 / 10
+
+
+
+        'AddHandler fg.ColumnHeaderMouseClick, AddressOf DataGridViewCellMouseEventHandler
+
+
+        fg.ResumeLayout()
+
+
+        fg.RowCount = 2
+        fg.ColumnCount = 2
+
+
+
+        fg.Columns(0).Name = "日付"
+        fg.Columns(0).SortMode = DataGridViewColumnSortMode.Automatic
+        fg.Columns(0).HeaderCell.Style.BackColor = FromHtml(G_GRID_TITLE_COLOR)
+        fg.Columns(0).DefaultCellStyle.BackColor = FromHtml(G_GRID_TITLE_COLOR)
+
+
+        fg.Columns(1).Name = "イベント"
+        'fg.Columns(1).SortMode = DataGridViewColumnSortMode.Automatic
+
+        fg.Rows(0).Cells(0).Value = 20200101L
+        fg.Rows(0).Cells(1).Value = 1L
+        fg.Rows(1).Cells(0).Value = 20200102L
+        fg.Rows(1).Cells(1).Value = 2L
+        Exit Sub
+ERR_HANDLE:
+        fg.ResumeLayout()
+        MsgBox(GetCurrentMethod.Name & vbCrLf & Err.Description)
     End Sub
 
 End Class
