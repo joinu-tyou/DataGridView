@@ -18,6 +18,7 @@ Public Class Form1
 
         InitGridNoDataSource(fg1)
         InitGridNoDataSourceSort(fg2)
+        InitGridDataSource(fg3)
 
     End Sub
 
@@ -139,5 +140,45 @@ ERR_HANDLE:
         fg.ResumeLayout()
         MsgBox(GetCurrentMethod.Name & vbCrLf & Err.Description)
     End Sub
+
+
+    Private Sub InitGridDataSource(ByRef fg As System.Windows.Forms.DataGridView)
+
+        On Error GoTo ERR_HANDLE
+
+        Dim csvFilePath As String
+
+        csvFilePath = System.IO.Path.Combine(Application.StartupPath, "TestData.Csv")
+
+        If System.IO.File.Exists(csvFilePath) Then
+
+
+            '接続文字列
+            Dim conString As String =
+                "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" _
+                + Application.StartupPath + ";Extended Properties=""text;HDR=Yes;FMT=Delimited"""
+            Dim con As New System.Data.OleDb.OleDbConnection(conString)
+
+            Dim commText As String = "SELECT * FROM [" + "TestData.Csv" + "]"
+            Dim da As New System.Data.OleDb.OleDbDataAdapter(commText, con)
+
+            'DataTableに格納する
+            Dim dt As New DataTable
+            da.Fill(dt)
+            fg.SuspendLayout()
+            fg.DataSource = dt
+            fg.ResumeLayout()
+        End If
+
+
+
+
+
+        Exit Sub
+ERR_HANDLE:
+        fg.ResumeLayout()
+        MsgBox(GetCurrentMethod.Name & vbCrLf & Err.Description)
+    End Sub
+
 
 End Class
